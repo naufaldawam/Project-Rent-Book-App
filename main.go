@@ -21,10 +21,8 @@ func main() {
 		fmt.Scanln(&input)
 
 		switch input {
-		case 1: 
+		case 1:
 			var login entity.Users
-
-
 
 		case 2:
 			var newUser entity.Users
