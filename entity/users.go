@@ -14,12 +14,10 @@ type Users struct {
 	Pass      string
 }
 
-
 //select * from user dari go ke db
 type AksesUsers struct {
 	DB *gorm.DB
 }
-
 
 // function create users
 //=======================
@@ -33,7 +31,6 @@ func (au *AksesUsers) RegisterUser(newUser Users) Users {
 	return newUser
 }
 
-
 //function validasi login
 //=======================
 func (au *AksesUsers) Validation(wasCreated Users) Users {
@@ -41,7 +38,7 @@ func (au *AksesUsers) Validation(wasCreated Users) Users {
 }
 
 //function read users
-//=======================
+//===================
 // func (au *AksesUsers) GetAllData() []Users {
 // 	var getUsers = []Users{}
 // 	err := au.DB.Find(&getUsers)
