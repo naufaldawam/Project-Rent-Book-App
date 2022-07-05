@@ -4,10 +4,7 @@ import (
 	"Project_Group/config"
 	"Project_Group/entity"
 	"fmt"
-	"os/user"
 )
-
-
 
 func main() {
 	conn := config.InitDB()
@@ -15,7 +12,7 @@ func main() {
 	var input int = 0
 
 	for input != 4 {
-		
+
 		fmt.Println("\t Rent Book App")
 		fmt.Println("1. Login App")
 		fmt.Println("2. Register")
@@ -44,11 +41,12 @@ func main() {
 			// 	fmt.Println("Tidak bisa input, karena Error!")
 			// 	break
 			// }
-			if newUser.Email == aksesUsers.RegisterUser(newUser.Email){
-				fmt.Println("Tidak bisa input, karena Error!")
-				break
-			}else {
+			var isCreated = aksesUsers.IsCreated(newUser.Email, newUser.Phone)
+			if isCreated == false {
 				res := aksesUsers.RegisterUser(newUser)
+				fmt.Println("Selamat datang!", res.Name_user)
+			} else {
+				fmt.Println("Tidak bisa input, karena Error!")
 			}
 
 		default:

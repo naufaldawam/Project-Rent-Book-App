@@ -31,16 +31,22 @@ func (au *AksesUsers) RegisterUser(newUser Users) Users {
 	return newUser
 }
 
+func (au *AksesUsers) IsCreated(Email, Phone string) bool {
+	err := au.DB.Where("email = ? AND phone = ?", Email, Phone).First(&Users{})
+	if err.Error != nil {
+		return true
+	}
+	if err.RowsAffected != 0 {
+		return true
+	}
+	return false
+}
+
 //function validasi login
 //=======================
-func (au *AksesUsers) Validation(wasCreated Users) Users {
-	usersCreated := Users{}
-	err := au.DB.Raw("SELECT * FROM users WHERE email = ?", 1).Scan(&usersCreated.Email)
-	if err != nil {
-		log.Println(err)
-	}
-	return usersCreated
-}
+// func (au *AksesUsers) Validation(wasCreated Users) Users {
+// 	err := au.DB.Select(&wasCreated)
+// }
 
 //function read users
 //===================
