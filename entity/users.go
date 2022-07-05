@@ -34,7 +34,12 @@ func (au *AksesUsers) RegisterUser(newUser Users) Users {
 //function validasi login
 //=======================
 func (au *AksesUsers) Validation(wasCreated Users) Users {
-	err := au.DB.Select(&wasCreated)
+	usersCreated := Users{}
+	err := au.DB.Raw("SELECT * FROM users WHERE email = ?", 1).Scan(&usersCreated.Email)
+	if err != nil {
+		log.Println(err)
+	}
+	return usersCreated
 }
 
 //function read users
