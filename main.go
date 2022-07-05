@@ -39,18 +39,8 @@ func main() {
 			fmt.Scanln(&newUser.Phone)
 			fmt.Print("Masukkan password: ")
 			fmt.Scanln(&newUser.Pass)
-			// res := aksesUsers.RegisterUser(newUser)
-			// if res.ID == 0 || res.Name_user == newUser.Name_user {
-			// 	fmt.Println("Tidak bisa input, karena Error!")
-			// 	break
-			// }
-			if newUser.Email == aksesUsers.RegisterUser(newUser.Email){
-				fmt.Println("Tidak bisa input, karena Error!")
-				break
-			}else {
-				res := aksesUsers.RegisterUser(newUser)
-			}
-
+			
+			
 		default:
 			continue
 		}
