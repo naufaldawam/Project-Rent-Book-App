@@ -34,7 +34,7 @@ func (au *AksesUsers) RegisterUser(newUser Users) Users {
 //function validasi login
 func (au *AksesUsers) IsCreated(Email, Phone string) bool {
 	err := au.DB.Where("email = ? AND phone = ?", Email, Phone).First(&Users{})
-	if err.Error != nil {
+	if err != nil {
 		return true
 	}
 	if err.RowsAffected != 0 {
@@ -43,11 +43,6 @@ func (au *AksesUsers) IsCreated(Email, Phone string) bool {
 	return false
 }
 
-//function validasi login
-//=======================
-// func (au *AksesUsers) Validation(wasCreated Users) Users {
-// 	err := au.DB.Select(&wasCreated)
-// }
 
 //function read users
 //===================

@@ -32,6 +32,11 @@ create table rent_books(
 	foreign key (user_id) references users(id) on delete cascade
 );
 
+
+-- tambah colum deleted at
+alter table users add COLUMN deleted_at datetime default current_timestamp;
+alter table books ADD COLUMN deleted_at datetime default current_timestamp;
+
 -- Check user history for book rental :
 select u.name_user, u.email, u.phone, rb.rent_date, rb.return_date
 from users u

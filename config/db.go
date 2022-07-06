@@ -15,6 +15,16 @@ func InitDB() *gorm.DB {
 		return nil
 	}
 	return db
+
+	// buat koneksi ke DB
+	// <username>:<password>@tcp(<hostname>:<portDB>)/<db_name>
+	// dbConnection := os.Getenv("DB_CONNECTION_RENT_BOOK_APP")
+	// db, err := gorm.Open(mysql.Open(dbConnection), &gorm.Config{})
+	// if err != nil {
+	// 	log.Fatal(err)
+	// 	return nil
+	// }
+	// return db
 }
 
 // func MigrateDB(conn *gorm.DB) {

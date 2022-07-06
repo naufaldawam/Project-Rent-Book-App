@@ -27,7 +27,6 @@ func main() {
 
 		case 2:
 			var newUser entity.Users
-			// var input string
 			fmt.Print("Masukkan username: ")
 			fmt.Scanln(&newUser.Name_user)
 			fmt.Print("Masukkan email: ")
@@ -36,13 +35,8 @@ func main() {
 			fmt.Scanln(&newUser.Phone)
 			fmt.Print("Masukkan password: ")
 			fmt.Scanln(&newUser.Pass)
-			// res := aksesUsers.RegisterUser(newUser)
-			// if res.ID == 0 || res.Name_user == newUser.Name_user {
-			// 	fmt.Println("Tidak bisa input, karena Error!")
-			// 	break
-			// }
 			var isCreated = aksesUsers.IsCreated(newUser.Email, newUser.Phone)
-			if isCreated == false {
+			if !isCreated {
 				res := aksesUsers.RegisterUser(newUser)
 				fmt.Println("Selamat datang!", res.Name_user)
 			} else {
