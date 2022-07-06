@@ -12,15 +12,16 @@ type Users struct {
 	Email     string
 	Phone     string
 	Pass      string
+	Users     []Users `gorm:"foreignKey:User_id"`
 }
 
-//select * from user dari go ke db
+// select * from user dari go ke db:
 type AksesUsers struct {
 	DB *gorm.DB
 }
 
-// function create users
-//=======================
+// Function create user.
+// =====================
 func (au *AksesUsers) RegisterUser(newUser Users) Users {
 	err := au.DB.Create(&newUser).Error
 	if err != nil {
@@ -33,7 +34,7 @@ func (au *AksesUsers) RegisterUser(newUser Users) Users {
 
 //function validasi create user
 func (au *AksesUsers) IsCreated(Email, Phone string) bool {
-	err := au.DB.Where("email = ? AND phone = ?", Email, Phone).First(&Users{})
+	err := au.DB.Where("email = ? || phone = ?", Email, Phone).First(&Users{})
 	if err.Error != nil && err.Error != gorm.ErrRecordNotFound {
 		return true
 	}
@@ -43,26 +44,14 @@ func (au *AksesUsers) IsCreated(Email, Phone string) bool {
 	return false
 }
 
-// function login
-// ===============
+// Function login user.
+// ====================
 func (au *AksesUsers) Islogin(Email, Pass string) bool {
-	err := au.DB.Where("email = ? AND pass = ?", Email, Pass).Find(&Users{})
+	err := au.DB.Where("email = ? AND pass = ?", Email, Pass).First(&Users{})
 	if err.Error != nil {
 		return true
 	}
-	if err.RowsAffected != 0 {
-		return true
-	}
 	return false
-
-	func (au *AksesUsers) Islogin(Email, Pass string) bool {
-		err := au.DB.Where("email = ? AND pass = ?", Email, Pass).First(&Users{})
-		if err.Error != nil {
-			return true
-		}
-		return false
-	}
-
 }
 
 //function read users
