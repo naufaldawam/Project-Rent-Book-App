@@ -31,6 +31,7 @@ func (au *AksesUsers) RegisterUser(newUser Users) Users {
 	return newUser
 }
 
+//function validasi create user
 func (au *AksesUsers) IsCreated(Email, Phone string) bool {
 	err := au.DB.Where("email = ? || phone = ?", Email, Phone).First(&Users{})
 	if err.Error != nil && err.Error != gorm.ErrRecordNotFound {
@@ -54,13 +55,13 @@ func (au *AksesUsers) Islogin(Email, Pass string) bool {
 
 //function read users
 //===================
-// func (au *AksesUsers) GetAllData() []Users {
-// 	var getUsers = []Users{}
-// 	err := au.DB.Find(&getUsers)
-// 	if err.Error != nil {
-// 		log.Fatal(err.Statement.SQL.String())
-// 		return nil
-// 	}
+func (au *AksesUsers) GetAllData() []Users {
+	var getUsers = []Users{}
+	err := au.DB.Find(&getUsers)
+	if err.Error != nil {
+		log.Fatal(err.Statement.SQL.String())
+		return nil
+	}
 
-// 	return getUsers
-// }
+	return getUsers
+}

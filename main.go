@@ -45,7 +45,7 @@ func main() {
 			fmt.Print("Masukkan Password: ")
 			fmt.Scanln(&newUser.Pass)
 			var isCreated = aksesUsers.IsCreated(newUser.Email, newUser.Phone)
-			if isCreated == false {
+			if !isCreated {
 				res := aksesUsers.RegisterUser(newUser)
 				fmt.Println("Selamat bergabung!", res.Name_user)
 				break
@@ -53,7 +53,13 @@ func main() {
 				fmt.Println("Tidak bisa input, karena Error!")
 			}
 
+		case 4:
+			break
+
 		default:
+			fmt.Println("===============================\t")
+			fmt.Println("harap masukan menu yang sesuai!")
+			fmt.Println("===============================\t")
 			continue
 		}
 	}
