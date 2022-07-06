@@ -16,7 +16,6 @@ create table books(
 	id int primary key not null auto_increment,
 	user_id int,
 	name_book varchar(100),
-	content_book varchar(100),
 	created_at datetime default current_timestamp,
 	updated_at datetime default current_timestamp,
 	foreign key (user_id) references users(id) on delete cascade
