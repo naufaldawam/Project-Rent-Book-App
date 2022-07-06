@@ -12,6 +12,7 @@ type Users struct {
 	Email     string
 	Phone     string
 	Pass      string
+	Users     []Users `gorm:"foreignKey:User_id"`
 }
 
 // select * from user dari go ke db:
