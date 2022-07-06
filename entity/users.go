@@ -14,13 +14,13 @@ type Users struct {
 	Pass      string
 }
 
-//select * from user dari go ke db
+// select * from user dari go ke db:
 type AksesUsers struct {
 	DB *gorm.DB
 }
 
-// function create users
-//=======================
+// Function create user.
+// =====================
 func (au *AksesUsers) RegisterUser(newUser Users) Users {
 	err := au.DB.Create(&newUser).Error
 	if err != nil {
@@ -32,7 +32,7 @@ func (au *AksesUsers) RegisterUser(newUser Users) Users {
 }
 
 func (au *AksesUsers) IsCreated(Email, Phone string) bool {
-	err := au.DB.Where("email = ? AND phone = ?", Email, Phone).First(&Users{})
+	err := au.DB.Where("email = ? || phone = ?", Email, Phone).First(&Users{})
 	if err.Error != nil && err.Error != gorm.ErrRecordNotFound {
 		return true
 	}
@@ -42,11 +42,15 @@ func (au *AksesUsers) IsCreated(Email, Phone string) bool {
 	return false
 }
 
-//function validasi login
-//=======================
-// func (au *AksesUsers) Validation(wasCreated Users) Users {
-// 	err := au.DB.Select(&wasCreated)
-// }
+// Function login user.
+// ====================
+func (au *AksesUsers) Islogin(Email, Pass string) bool {
+	err := au.DB.Where("email = ? AND pass = ?", Email, Pass).First(&Users{})
+	if err.Error != nil {
+		return true
+	}
+	return false
+}
 
 //function read users
 //===================
