@@ -45,6 +45,7 @@ func main() {
 			if isCreated == false {
 				res := aksesUsers.RegisterUser(newUser)
 				fmt.Println("Selamat datang!", res.Name_user)
+				break
 			} else {
 				fmt.Println("Tidak bisa input, karena Error!")
 			}

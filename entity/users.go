@@ -33,7 +33,7 @@ func (au *AksesUsers) RegisterUser(newUser Users) Users {
 
 func (au *AksesUsers) IsCreated(Email, Phone string) bool {
 	err := au.DB.Where("email = ? AND phone = ?", Email, Phone).First(&Users{})
-	if err.Error != nil {
+	if err.Error != nil && err.Error != gorm.ErrRecordNotFound {
 		return true
 	}
 	if err.RowsAffected != 0 {
