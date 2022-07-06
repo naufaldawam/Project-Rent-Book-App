@@ -12,7 +12,6 @@ func main() {
 	var input int = 0
 
 	for input != 4 {
-
 		fmt.Println("\t Rent Book App")
 		fmt.Println("1. Login App")
 		fmt.Println("2. Register")
@@ -23,7 +22,6 @@ func main() {
 
 		switch input {
 		case 1:
-			// var login entity.Users
 			var login entity.Users
 			fmt.Print("Masukkan Username: ")
 			fmt.Scanln(&login.Email)
@@ -35,20 +33,22 @@ func main() {
 			} else {
 				fmt.Println("Anda gagal Login!")
 			}
+
 		case 2:
 			var newUser entity.Users
-			fmt.Print("Masukkan username: ")
+			fmt.Print("Masukkan Username: ")
 			fmt.Scanln(&newUser.Name_user)
-			fmt.Print("Masukkan email: ")
+			fmt.Print("Masukkan Email: ")
 			fmt.Scanln(&newUser.Email)
-			fmt.Print("Masukkan nomor hp: ")
+			fmt.Print("Masukkan Nomor HP: ")
 			fmt.Scanln(&newUser.Phone)
-			fmt.Print("Masukkan password: ")
+			fmt.Print("Masukkan Password: ")
 			fmt.Scanln(&newUser.Pass)
 			var isCreated = aksesUsers.IsCreated(newUser.Email, newUser.Phone)
 			if !isCreated {
 				res := aksesUsers.RegisterUser(newUser)
-				fmt.Println("Selamat datang!", res.Name_user)
+				fmt.Println("Selamat bergabung!", res.Name_user)
+				break
 			} else {
 				fmt.Println("Tidak bisa input, karena Error!")
 			}
