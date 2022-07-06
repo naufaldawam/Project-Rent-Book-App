@@ -31,10 +31,10 @@ func (au *AksesUsers) RegisterUser(newUser Users) Users {
 	return newUser
 }
 
-//function validasi login
+//function validasi create user
 func (au *AksesUsers) IsCreated(Email, Phone string) bool {
 	err := au.DB.Where("email = ? AND phone = ?", Email, Phone).First(&Users{})
-	if err != nil {
+	if err.Error != nil && err.Error != gorm.ErrRecordNotFound {
 		return true
 	}
 	if err.RowsAffected != 0 {
@@ -43,16 +43,37 @@ func (au *AksesUsers) IsCreated(Email, Phone string) bool {
 	return false
 }
 
+// function login
+// ===============
+func (au *AksesUsers) Islogin(Email, Pass string) bool {
+	err := au.DB.Where("email = ? AND pass = ?", Email, Pass).Find(&Users{})
+	if err.Error != nil {
+		return true
+	}
+	if err.RowsAffected != 0 {
+		return true
+	}
+	return false
+
+	func (au *AksesUsers) Islogin(Email, Pass string) bool {
+		err := au.DB.Where("email = ? AND pass = ?", Email, Pass).First(&Users{})
+		if err.Error != nil {
+			return true
+		}
+		return false
+	}
+
+}
 
 //function read users
 //===================
-// func (au *AksesUsers) GetAllData() []Users {
-// 	var getUsers = []Users{}
-// 	err := au.DB.Find(&getUsers)
-// 	if err.Error != nil {
-// 		log.Fatal(err.Statement.SQL.String())
-// 		return nil
-// 	}
+func (au *AksesUsers) GetAllData() []Users {
+	var getUsers = []Users{}
+	err := au.DB.Find(&getUsers)
+	if err.Error != nil {
+		log.Fatal(err.Statement.SQL.String())
+		return nil
+	}
 
-// 	return getUsers
-// }
+	return getUsers
+}

@@ -24,7 +24,17 @@ func main() {
 		switch input {
 		case 1:
 			// var login entity.Users
-
+			var login entity.Users
+			fmt.Print("Masukkan Username: ")
+			fmt.Scanln(&login.Email)
+			fmt.Print("Masukkan Password: ")
+			fmt.Scanln(&login.Pass)
+			isLogin := aksesUsers.Islogin(login.Email, login.Pass)
+			if !isLogin {
+				fmt.Println("Anda berhasil Login!")
+			} else {
+				fmt.Println("Anda gagal Login!")
+			}
 		case 2:
 			var newUser entity.Users
 			fmt.Print("Masukkan username: ")
@@ -43,7 +53,13 @@ func main() {
 				fmt.Println("Tidak bisa input, karena Error!")
 			}
 
+		case 4:
+			break
+
 		default:
+			fmt.Println("===============================\t")
+			fmt.Println("harap masukan menu yang sesuai!")
+			fmt.Println("===============================\t")
 			continue
 		}
 	}
