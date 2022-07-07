@@ -8,14 +8,16 @@ import (
 
 type Users struct {
 	gorm.Model
-	Name_user string
-	Email     string
-	Phone     string
-	Pass      string
-	Users     []Users `gorm:"foreignKey:User_id"`
+	Name_user  string
+	Email      string
+	Phone      string
+	Pass       string
+	Books      []Books      `gorm:"foreignKey:User_id"`
+	Rent_Books []Rent_Books `gorm:"foreignKey:User_id"`
 }
 
-// select * from user dari go ke db:
+// select * from users dari go ke db:
+// ==================================
 type AksesUsers struct {
 	DB *gorm.DB
 }
@@ -32,7 +34,8 @@ func (au *AksesUsers) RegisterUser(newUser Users) Users {
 	return newUser
 }
 
-//function validasi create user
+// Function validasi create user.
+// ==============================
 func (au *AksesUsers) IsCreated(Email, Phone string) bool {
 	err := au.DB.Where("email = ? || phone = ?", Email, Phone).First(&Users{})
 	if err.Error != nil && err.Error != gorm.ErrRecordNotFound {
@@ -54,8 +57,21 @@ func (au *AksesUsers) Islogin(Email, Pass string) bool {
 	return false
 }
 
-//function read users
-//===================
+func (au *AksesUsers) DeleteUser(Id int) bool {
+	postExc := au.DB.Where("id = ?", Id).Delete(&Users{})
+	if err := postExc.Error; err != nil {
+		log.Fatal(err)
+		return false
+	}
+	if aff := postExc.RowsAffected; aff < 1 {
+		log.Println("Tidak ada data yang dihapus")
+		return false
+	}
+	return true
+}
+
+// Function read users.
+// ====================
 func (au *AksesUsers) GetAllData() []Users {
 	var getUsers = []Users{}
 	err := au.DB.Find(&getUsers)

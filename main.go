@@ -9,14 +9,16 @@ import (
 func main() {
 	conn := config.InitDB()
 	aksesUsers := entity.AksesUsers{DB: conn}
+	aksesBooks := entity.AksesBooks{DB: conn}
 	var input int = 0
 
-	for input != 4 {
+	for input != 99 {
 		fmt.Println("\t Rent Book App")
 		fmt.Println("1. Login App")
-		fmt.Println("2. Register")
+		fmt.Println("2. Register User")
 		fmt.Println("3. Katalog Buku")
-		fmt.Println("4. Keluar")
+		fmt.Println("4. Delete User")
+		fmt.Println("99. Keluar")
 		fmt.Print("Masukkan Pilihan Menu: ")
 		fmt.Scanln(&input)
 
@@ -53,12 +55,28 @@ func main() {
 				fmt.Println("Tidak bisa input, karena Error!")
 			}
 
+		case 3:
+			var addBook entity.Books
+			fmt.Print("Masukan Judul Buku: ")
+			fmt.Scanln(&addBook.Name_book)
+			fmt.Print("Masukan Kepemilikan Buku: ")
+			fmt.Scanln(&addBook.User_id)
+			res := aksesBooks.AddBook(addBook)
+			fmt.Println("Buku berhasil di input: ", res.Name_book)
+
 		case 4:
+			var ID int
+			fmt.Print("Masukkan ID yang akan dihapus: ")
+			fmt.Scanln(&ID)
+			fmt.Println(aksesUsers.DeleteUser(ID))
+			fmt.Println("Akun berhasil di delete!")
+
+		case 99:
 			break
 
 		default:
 			fmt.Println("===============================\t")
-			fmt.Println("harap masukan menu yang sesuai!")
+			fmt.Println("Harap masukan menu yang sesuai!")
 			fmt.Println("===============================\t")
 			continue
 		}
