@@ -8,6 +8,7 @@ import (
 
 type Users struct {
 	gorm.Model
+	Id_user   string `gorm:"primaryKey;type:varchar(36);"`
 	Name_user string
 	Email     string
 	Phone     string
@@ -69,6 +70,22 @@ func (au *AksesUsers) CekPassword(Pass string) bool {
 	}
 	return false
 }
+
+
+//function read users
+//===================
+func (au *AksesUsers) EditUser(ID , Name_user, Email, Phone, Pass  string ) string {
+	var EditUserSucces = "Berhasil edit user"
+	var EditUserUnsucces = "Edit User tidak berhasil"
+	err := au.DB.Where(Users{Id_user: ID}).Assign(Users{Name_user: Name_user, Phone: Phone, Email: Email, Pass: Pass}).FirstOrCreate(&Users{})
+		
+	if err.Error != nil {
+		return EditUserSucces
+	}
+
+	return EditUserUnsucces
+}
+
 
 //function read users
 //===================

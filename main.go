@@ -3,7 +3,9 @@ package main
 import (
 	"Project_Group/config"
 	"Project_Group/entity"
+	"bufio"
 	"fmt"
+	"os"
 	// "os/user"
 )
 
@@ -22,7 +24,7 @@ func main() {
 	config.MigrateDB(conn)
 	aksesUsers := entity.AksesUsers{DB: conn}
 	// aksesBooks := entity.AksesBooks{DB: conn}
-	// var userActive aksesUsers.Users
+	var userActive entity.Users
 
 	var menu = false
 	for !menu {
@@ -65,7 +67,7 @@ func main() {
 			fmt.Print("Masukkan Password: ")
 			fmt.Scanln(&newUser.Pass)
 			var isCreated = aksesUsers.IsCreated(newUser.Email, newUser.Phone)
-			fmt.Println("is created : ", isCreated)
+			// fmt.Println("is created : ", isCreated)
 			if isCreated {
 				res := aksesUsers.RegisterUser(newUser)
 				fmt.Println("Selamat bergabung!", res.Name_user)
@@ -94,7 +96,7 @@ func main() {
 		// fmt.Println("8. Pinjam Buku")
 		// fmt.Println("9. Kembalikan Buku")
 		// fmt.Println("10. Lihat Daftar Buku Yang Tersedia")
-		fmt.Println("11. Logout")
+		fmt.Println("00. Logout")
 		fmt.Print("Pilih Menu: ")
 		fmt.Scan(&input)
 		fmt.Print("\n")
@@ -109,82 +111,31 @@ func main() {
 		// 	fmt.Println("Email: ", val.Email)
 		// }
 		case 2:
+			var IDUSER = userActive.Id_user
+
+			updateUser := entity.Users{}
+
 			fmt.Println("----- Perbaharui Akun Saya -----")
+			fmt.Print("Masukkan Nama: ")
+			Name_user := bufio.NewReader(os.Stdin)
+			updateUser.Name_user, _ = Name_user.ReadString('\n')
+			fmt.Print("Masukkan Email: ")
+			Email := bufio.NewReader(os.Stdin)
+			updateUser.Email, _ = Email.ReadString('\n')
+			fmt.Print("Masukkan Password: ")
+			Pass := bufio.NewReader(os.Stdin)
+			updateUser.Pass, _ = Pass.ReadString('\n')
+			fmt.Print("Masukkan Nomor HP: ")
+			Phone := bufio.NewReader(os.Stdin)
+			updateUser.Phone, _ = Phone.ReadString('\n')
+
+			// aksesUsers.EditUser(IDUSER, updateUser)
+			// fmt.Println("Update Data Berhasil")
 
 
-		case 11:
+		case 00:
 			menu = false
 		}
 
 	}
-
-	// conn := config.InitDB()
-	// aksesUsers := entity.AksesUsers{DB: conn}
-	// aksesBooks := entity.AksesBooks{DB: conn}
-	// var input int = 0
-
-	// for input != 4 {
-	// 	fmt.Println("\t Rent Book App")
-	// 	fmt.Println("1. Login App")
-	// 	fmt.Println("2. Register")
-	// 	fmt.Println("3. Katalog Buku")
-	// 	fmt.Println("4. Keluar")
-	// 	fmt.Print("Masukkan Pilihan Menu: ")
-	// 	fmt.Scanln(&input)
-
-	// 	switch input {
-	// 	case 1:
-	// 		var login entity.Users
-	// 		fmt.Print("Masukkan Username: ")
-	// 		fmt.Scanln(&login.Email)
-	// 		fmt.Print("Masukkan Password: ")
-	// 		fmt.Scanln(&login.Pass)
-	// 		isLogin := aksesUsers.Islogin(login.Email, login.Pass)
-	// 		if !isLogin {
-	// 			fmt.Println("Anda berhasil Login!")
-	// 		} else {
-	// 			fmt.Println("Anda gagal Login!")
-	// 		}
-
-	// 	case 2:
-	// 		var newUser entity.Users
-	// 		fmt.Print("Masukkan Username: ")
-	// 		fmt.Scanln(&newUser.Name_user)
-	// 		fmt.Print("Masukkan Email: ")
-	// 		fmt.Scanln(&newUser.Email)
-	// 		fmt.Print("Masukkan Nomor HP: ")
-	// 		fmt.Scanln(&newUser.Phone)
-	// 		fmt.Print("Masukkan Password: ")
-	// 		fmt.Scanln(&newUser.Pass)
-	// 		var isCreated = aksesUsers.IsCreated(newUser.Email, newUser.Phone)
-	// 		if !isCreated {
-	// 			res := aksesUsers.RegisterUser(newUser)
-	// 			fmt.Println("Selamat bergabung!", res.Name_user)
-	// 			break
-	// 		} else {
-	// 			fmt.Println("Tidak bisa input, karena Error!")
-	// 		}
-	// 		break
-
-	// 	case 3:
-	// 		var newBook entity.Books
-	// 		fmt.Println("Masukan Buku: ")
-	// 		fmt.Scanln(&newBook.Name_book)
-	// 		fmt.Println("Masukan kepemilikan buku: ")
-	// 		fmt.Scanln(&newBook.User_id)
-	// 		res := aksesBooks.NewBook(newBook)
-	// 		fmt.Println("Buku berhasil di input: ", res.Name_book)
-	// 		break
-
-	// 	case 4:
-	// 		break
-
-	// 	default:
-	// 		fmt.Println("===============================\t")
-	// 		fmt.Println("harap masukan menu yang sesuai!")
-	// 		fmt.Println("===============================\t")
-	// 		continue
-	// 	}
-	// }
-	// fmt.Println("Program telah berhenti!")
 }
