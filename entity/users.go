@@ -44,14 +44,31 @@ func (au *AksesUsers) IsCreated(Email, Phone string) bool {
 	return false
 }
 
-// Function login user.
+// Function auth email.
 // ====================
-func (au *AksesUsers) Islogin(Email, Pass string) bool {
-	err := au.DB.Where("email = ? AND pass = ?", Email, Pass).First(&Users{})
-	if err.Error != nil {
-		return true
+func (au *AksesUsers) CekEmail(Email string) bool {
+	cekEmail := au.DB.Where("email = ?", Email).Find(&Users{})
+	if err := cekEmail.Error ; err != nil{
+		return false
 	}
-	return false
+	if aff := cekEmail.RowsAffected; aff != 0 {
+		return false
+	}
+	return true
+}
+
+
+// Function auth email.
+// ====================
+func (au *AksesUsers) CekPassword(Password string) bool {
+	cekPass := au.DB.Where("email = ?", Password).Find(&Users{})
+	if err := cekPass.Error ; err != nil{
+		return false
+	}
+	if aff := cekPass.RowsAffected; aff != 0 {
+		return false
+	}
+	return true
 }
 
 //function read users
