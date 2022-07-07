@@ -6,9 +6,12 @@ import (
 	"fmt"
 )
 
+
+
 func main() {
 	conn := config.InitDB()
 	aksesUsers := entity.AksesUsers{DB: conn}
+	aksesBooks := entity.AksesBooks{DB: conn}
 	var input int = 0
 
 	for input != 4 {
@@ -52,6 +55,17 @@ func main() {
 			} else {
 				fmt.Println("Tidak bisa input, karena Error!")
 			}
+			break
+
+		case 3:
+			var newBook entity.Books
+			fmt.Println("Masukan Buku: ")
+			fmt.Scanln(&newBook.Name_book)
+			fmt.Println("Masukan kepemilikan buku: ")
+			fmt.Scanln(&newBook.User_id)
+			res := aksesBooks.NewBook(newBook)
+			fmt.Println("Buku berhasil di input: ", res.Name_book)
+			break
 
 		case 4:
 			break
