@@ -1,7 +1,7 @@
 package config
 
 import (
-	// "Project_Group/entity"
+	"Project_Group/entity"
 	"log"
 
 	"gorm.io/driver/mysql"
@@ -27,6 +27,6 @@ func InitDB() *gorm.DB {
 	// return db
 }
 
-// func MigrateDB(conn *gorm.DB) {
-// 	conn.AutoMigrate(entity.Users{})
-// }
+func MigrateDB(conn *gorm.DB) {
+	conn.AutoMigrate(entity.Users{})
+}

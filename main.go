@@ -19,13 +19,16 @@ func login() (string, string) {
 
 func main() {
 	conn := config.InitDB()
+	config.MigrateDB(conn)
 	aksesUsers := entity.AksesUsers{DB: conn}
 	// aksesBooks := entity.AksesBooks{DB: conn}
+	// var userActive aksesUsers.Users
+
 	var menu = false
 	for !menu {
 		var input int = 0
 		fmt.Println("============================")
-		fmt.Println("\t Rent Book App")
+		fmt.Println("\t Menu Awal Rent Book App")
 		fmt.Println("1. Login App")
 		fmt.Println("2. Register")
 		fmt.Println("3. Katalog Buku")
@@ -63,7 +66,7 @@ func main() {
 			fmt.Scanln(&newUser.Pass)
 			var isCreated = aksesUsers.IsCreated(newUser.Email, newUser.Phone)
 			fmt.Println("is created : ", isCreated)
-			if !isCreated {
+			if isCreated == true {
 				res := aksesUsers.RegisterUser(newUser)
 				fmt.Println("Selamat bergabung!", res.Name_user)
 			} else {
@@ -91,7 +94,7 @@ func main() {
 		// fmt.Println("8. Pinjam Buku")
 		// fmt.Println("9. Kembalikan Buku")
 		// fmt.Println("10. Lihat Daftar Buku Yang Tersedia")
-		fmt.Println("11. Exit")
+		fmt.Println("11. Logout")
 		fmt.Print("Pilih Menu: ")
 		fmt.Scan(&input)
 		fmt.Print("\n")
@@ -108,6 +111,9 @@ func main() {
 		case 2:
 			fmt.Println("----- Perbaharui Akun Saya -----")
 
+
+		case 11:
+			menu = false
 		}
 
 	}
