@@ -1,6 +1,7 @@
 package entity
 
 import (
+	"fmt"
 	"log"
 
 	"gorm.io/gorm"
@@ -67,6 +68,7 @@ func (au *AksesUsers) DeactiveUser(Id int) bool {
 		log.Println("Tidak ada user dinonkatifkan!")
 		return false
 	}
+	fmt.Println("Akun berhasil dinonaktifkan!")
 	return true
 }
 
