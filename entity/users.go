@@ -37,7 +37,7 @@ func (au *AksesUsers) RegisterUser(newUser Users) Users {
 // Function validasi create user.
 // ==============================
 func (au *AksesUsers) IsCreated(Email, Phone string) bool {
-	err := au.DB.Where("email = ? || phone = ?", Email, Phone).First(&Users{})
+	err := au.DB.Where("email = ? OR phone = ?", Email, Phone).First(&Users{})
 	if err.Error != nil && err.Error != gorm.ErrRecordNotFound {
 		return true
 	}
@@ -57,14 +57,14 @@ func (au *AksesUsers) Islogin(Email, Pass string) bool {
 	return false
 }
 
-func (au *AksesUsers) DeleteUser(Id int) bool {
+func (au *AksesUsers) DeactiveUser(Id int) bool {
 	postExc := au.DB.Where("id = ?", Id).Delete(&Users{})
 	if err := postExc.Error; err != nil {
 		log.Fatal(err)
 		return false
 	}
 	if aff := postExc.RowsAffected; aff < 1 {
-		log.Println("Tidak ada data yang dihapus")
+		log.Println("Tidak ada user dinonkatifkan!")
 		return false
 	}
 	return true

@@ -10,19 +10,17 @@ func main() {
 	conn := config.InitDB()
 	aksesUsers := entity.AksesUsers{DB: conn}
 	aksesBooks := entity.AksesBooks{DB: conn}
-	var input int = 0
-
-	for input != 99 {
+	var menu int
+	for menu != 4 {
 		fmt.Println("\t Rent Book App")
 		fmt.Println("1. Login App")
-		fmt.Println("2. Register User")
+		fmt.Println("2. Registrasi User")
 		fmt.Println("3. Katalog Buku")
-		fmt.Println("4. Delete User")
-		fmt.Println("99. Keluar")
+		fmt.Println("4. Keluar")
 		fmt.Print("Masukkan Pilihan Menu: ")
-		fmt.Scanln(&input)
+		fmt.Scanln(&menu)
 
-		switch input {
+		switch menu {
 		case 1:
 			var login entity.Users
 			fmt.Print("Masukkan Username: ")
@@ -50,7 +48,6 @@ func main() {
 			if !isCreated {
 				res := aksesUsers.RegisterUser(newUser)
 				fmt.Println("Selamat bergabung!", res.Name_user)
-				break
 			} else {
 				fmt.Println("Tidak bisa input, karena Error!")
 			}
@@ -65,14 +62,14 @@ func main() {
 			fmt.Println("Buku berhasil di input: ", res.Name_book)
 
 		case 4:
-			var ID int
-			fmt.Print("Masukkan ID yang akan dihapus: ")
-			fmt.Scanln(&ID)
-			fmt.Println(aksesUsers.DeleteUser(ID))
-			fmt.Println("Akun berhasil di delete!")
+			break
 
 		case 99:
-			break
+			// var ID int
+			// fmt.Print("Masukkan ID User: ")
+			// fmt.Scanln(&ID)
+			// fmt.Println(aksesUsers.DeactiveUser(ID))
+			// fmt.Println("Akun berhasil dinonaktifkan!")
 
 		default:
 			fmt.Println("===============================\t")
