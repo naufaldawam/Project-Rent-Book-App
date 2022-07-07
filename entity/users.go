@@ -12,7 +12,7 @@ type Users struct {
 	Email     string
 	Phone     string
 	Pass      string
-	Books   []Books `gorm:"foreignKey:User_id"`
+	Books     []Books `gorm:"foreignKey:User_id"`
 }
 
 // select * from user dari go ke db:
@@ -34,7 +34,7 @@ func (au *AksesUsers) RegisterUser(newUser Users) Users {
 
 //function validasi create user
 func (au *AksesUsers) IsCreated(Email, Phone string) bool {
-	err := au.DB.Where("email = ? || phone = ?", Email, Phone).First(&Users{})
+	err := au.DB.Where("email = ? OR phone = ?", Email, Phone).First(&Users{})
 	if err.Error != nil && err.Error != gorm.ErrRecordNotFound {
 		return true
 	}
@@ -48,38 +48,35 @@ func (au *AksesUsers) IsCreated(Email, Phone string) bool {
 // ====================
 func (au *AksesUsers) CekEmail(Email string) bool {
 	cekEmail := au.DB.Where("email = ?", Email).Find(&Users{})
-	if err := cekEmail.Error ; err != nil{
-		return false
+	if err := cekEmail.Error; err != nil {
+		return true
 	}
 	if aff := cekEmail.RowsAffected; aff != 0 {
-		return false
+		return true
 	}
-	return true
+	return false
 }
 
-
-// Function auth email.
+// Function auth password.
 // ====================
-func (au *AksesUsers) CekPassword(Password string) bool {
-	cekPass := au.DB.Where("email = ?", Password).Find(&Users{})
-	if err := cekPass.Error ; err != nil{
-		return false
+func (au *AksesUsers) CekPassword(Pass string) bool {
+	cekPass := au.DB.Where("pass = ?", Pass).Find(&Users{})
+	if err := cekPass.Error; err != nil {
+		return true
 	}
 	if aff := cekPass.RowsAffected; aff != 0 {
-		return false
+		return true
 	}
-	return true
+	return false
 }
 
 //function read users
 //===================
-func (au *AksesUsers) GetAllData() []Users {
-	var getUsers = []Users{}
-	err := au.DB.Find(&getUsers)
+func (au *AksesUsers) GetAllUsers(Name string) Users {
+	var GetAllUsers = Users{}
+	err := au.DB.Select("name", "email", "phone", "created_at").Find(&GetAllUsers)
 	if err.Error != nil {
 		log.Fatal(err.Statement.SQL.String())
-		return nil
 	}
-
-	return getUsers
+	return GetAllUsers
 }

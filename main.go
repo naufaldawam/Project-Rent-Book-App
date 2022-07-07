@@ -7,13 +7,14 @@ import (
 	// "os/user"
 )
 
-func login() (Email string, Pass string) {
+func login() (string, string) {
+	var email, pass string
 	fmt.Println("Anda memilih menu login , Silahkan login terlebih dahulu")
 	fmt.Println("Masukan Email: ")
-	fmt.Scanln(&Email)
+	fmt.Scanln(&email)
 	fmt.Println("Masukan Password")
-	fmt.Scanln(&Pass)
-	return Email, Pass
+	fmt.Scanln(&pass)
+	return email, pass
 }
 
 func main() {
@@ -36,6 +37,10 @@ func main() {
 			Email, Pass := login()
 			emailAuth := aksesUsers.CekEmail(Email)
 			passAuth := aksesUsers.CekPassword(Pass)
+			fmt.Println("email: ", Email)
+			fmt.Println("pass: ", Pass)
+			fmt.Println("auth email: ", emailAuth)
+			fmt.Println("auth pass: ", passAuth)
 
 			if !emailAuth && !passAuth {
 				fmt.Println("Akun tidak ditemukan \n silahkan register terlebih dahulu")
@@ -57,6 +62,7 @@ func main() {
 			fmt.Print("Masukkan Password: ")
 			fmt.Scanln(&newUser.Pass)
 			var isCreated = aksesUsers.IsCreated(newUser.Email, newUser.Phone)
+			fmt.Println("is created : ", isCreated)
 			if !isCreated {
 				res := aksesUsers.RegisterUser(newUser)
 				fmt.Println("Selamat bergabung!", res.Name_user)
@@ -71,9 +77,40 @@ func main() {
 		}
 
 	}
-	// for menu {
-	// 		// fmt.Println("ini menu")
-	// 	}
+	for menu {
+		var input int
+		fmt.Println("--------------- SELAMAT DATANG ---------------")
+		fmt.Println("----- Silahkan Pilih Fitur yang Tersedia -----")
+		fmt.Println("1. Lihat Akun Saya")
+		fmt.Println("2. Perbarui Akun Saya")
+		fmt.Println("3. Hapus Akun Saya")
+		// fmt.Println("4. Tambah Buku Saya")
+		// fmt.Println("5. Lihat Daftar Buku Anda")
+		// fmt.Println("6. Perbarui Buku Anda")
+		// fmt.Println("7. Hapus Buku Anda")
+		// fmt.Println("8. Pinjam Buku")
+		// fmt.Println("9. Kembalikan Buku")
+		// fmt.Println("10. Lihat Daftar Buku Yang Tersedia")
+		fmt.Println("11. Exit")
+		fmt.Print("Pilih Menu: ")
+		fmt.Scan(&input)
+		fmt.Print("\n")
+
+		switch input {
+		case 1: //liat Akun
+			fmt.Println("----- Info Akun Saya -----")
+		// for _, val := range aksesUsers.GetAllUsers(){
+		// 	fmt.Println("Nama: ", val.Name)
+		// 	fmt.Println("Nomor HP: ", val.Phone)
+		// 	fmt.Println("User Name: ", val.Name)
+		// 	fmt.Println("Email: ", val.Email)
+		// }
+		case 2:
+			fmt.Println("----- Perbaharui Akun Saya -----")
+
+		}
+
+	}
 
 	// conn := config.InitDB()
 	// aksesUsers := entity.AksesUsers{DB: conn}
