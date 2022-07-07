@@ -66,7 +66,7 @@ func main() {
 			fmt.Scanln(&newUser.Pass)
 			var isCreated = aksesUsers.IsCreated(newUser.Email, newUser.Phone)
 			fmt.Println("is created : ", isCreated)
-			if isCreated == true {
+			if isCreated {
 				res := aksesUsers.RegisterUser(newUser)
 				fmt.Println("Selamat bergabung!", res.Name_user)
 			} else {
